@@ -4,5 +4,14 @@ def process_mention(status, settings):
     else:
         return None
 
+
 def process_follow(status, settings):
     return dict(dm='Hello, world!')
+
+
+def process_dm(status, settings):
+    if status.direct_message.text.lower() == 'hello':
+        return dict(dm='Hello, world!')
+    else:
+        return None
+    print status.direct_message.text.lower()
