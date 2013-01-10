@@ -13,10 +13,10 @@ $ source venv/bin/activate
 (venv)$ pip install -r requirements.txt
 ```
 
-Edit credentials.sh and put in your details from dev.twitter.com, then
-``source credentials.sh``
+Edit ``credentials.sh`` and put in your details from dev.twitter.com, then
+``$ source credentials.sh``
 
-Finally run ``python spritzbot.py``
+Finally run ``$ python spritzbot.py``
 
 
 ## Tutorial
