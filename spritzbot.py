@@ -20,13 +20,16 @@ class SpritzBot:
                                      default='extensions')
     settings = utils.dotdictify(dict(username=os.getenv('USERNAME')))
 
-    def __init__(self):
+    def __init__(self, hello=False):
         """Loads all plugins found in ``self.extensions_directory``
         into a dictionary at ``self.extensions``."""
         re_extension = re.compile('[^.].*\.py$') # match => [name].py
         for extension_file in os.listdir(self.extensions_directory):
             if re_extension.match(extension_file):
                 name = extension_file[:-3]
+                if name == 'hello' and not hello:
+                    continue # skip loading hello.py when in production
+
                 ext_info = imp.find_module(name, [self.extensions_directory])
                 extension = imp.load_module(name, *ext_info)
                 self.extensions[name] = extension
@@ -110,7 +113,7 @@ class SpritzBot:
         if 'follow' in result:
             # follow user
             raise NotImplementedError
-        
+
         if 'unfollow' in result:
             # unfollow user
             raise NotImplementedError
@@ -132,6 +135,6 @@ class SpritzBot:
 
 
 if __name__ == '__main__':
-    bot = SpritzBot()
+    bot = SpritzBot(hello=True)
     print bot.extensions
     bot.start()
