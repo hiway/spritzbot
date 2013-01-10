@@ -5,6 +5,7 @@ import os
 import re
 import imp
 import json
+import utils
 import requests
 
 from oauth_hook import OAuthHook
@@ -17,6 +18,7 @@ class SpritzBot:
     extensions = {} # list of extensions loaded from directory.
     extensions_directory = os.getenv('EXTENSION_DIRECTORY',
                                      default='extensions')
+    settings = utils.dotdictify(dict(username=os.getenv('USERNAME')))
 
     def __init__(self):
         """Loads all plugins found in ``self.extensions_directory``
@@ -49,7 +51,22 @@ class SpritzBot:
     def process(self, data):
         """Processes every status/event coming in through streaming API
         """
-        print data
+        # Convert tweet to pythonic form
+
+        status = utils.dotdictify(data)
+
+        for ext in self.extensions:
+            if 'text' in status:
+                if '@'+self.settings.username in status.text:
+                    result = self.extensions[ext].process_mention(status,
+                                                  settings=self.settings)
+
+                    result = utils.dotdictify(result)
+                    if 'response' in result:
+                        self.post(result.response,
+                                  status.id,
+                                  status.user.screen_name)
+
 
     def post(self, message, in_reply_to=None, mention=None):
         """Sends a tweet. If in_reply_to is set, the tweet is marked
@@ -70,5 +87,5 @@ class SpritzBot:
 if __name__ == '__main__':
     bot = SpritzBot()
     print bot.extensions
-    #bot.start()
-    bot.post('Chai time!')
+    bot.start()
+    #bot.post('Chai time!')

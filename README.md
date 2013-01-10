@@ -9,7 +9,7 @@ Create a function named ``process_mention`` that expects ``status`` and
 
 ```
 def process_mention(status, settings):
-    if status.user.screen_name == settings.username:
+    if status.text.lower() == ('@%s hello' % settings.username):
         return dict(response='Hello, world!')
     else:
         return None
