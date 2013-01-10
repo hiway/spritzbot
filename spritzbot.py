@@ -35,7 +35,6 @@ class SpritzBot:
         self.oauth_hook = OAuthHook(os.getenv('ACCESS_TOKEN'),
                                os.getenv('ACCESS_TOKEN_SECRET'))
 
-
     def start(self):
         """Connects to Twitter's streaming API"""
         session = requests.session(hooks={'pre_request':self.oauth_hook})
@@ -52,7 +51,24 @@ class SpritzBot:
         """
         print data
 
+    def post(self, message, in_reply_to=None, mention=None):
+        """Sends a tweet. If in_reply_to is set, the tweet is marked
+        as in response to that tweet. If mention is set, @[mention] is
+        automatically prepended before the tweet. Returns tweet_id if
+        successful, None if failed.
+        """
+        if mention:
+            message = '@%s %s' %(mention, message)
+
+        session = requests.session(hooks={'pre_request':self.oauth_hook})
+        session.post('http://api.twitter.com/1/statuses/update.json',
+                      {'status': message,
+                       'in_reply_to_status_id':in_reply_to,
+                       'wrap_links': True})
+
+
 if __name__ == '__main__':
     bot = SpritzBot()
     print bot.extensions
-    bot.start()
+    #bot.start()
+    bot.post('Chai time!')
