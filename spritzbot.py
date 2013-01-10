@@ -52,25 +52,27 @@ class SpritzBot:
         """Processes every status/event coming in through streaming API
         """
         # Convert tweet to pythonic form
-
         status = utils.dotdictify(data)
 
-        for ext in self.extensions:
+        for ext_name in self.extensions:
+            extension = self.extensions[ext_name]
             if 'text' in status:
                 if '@'+self.settings.username in status.text:
-                    result = self.extensions[ext].process_mention(status,
-                                                  settings=self.settings)
-                    result = utils.dotdictify(result)
-                    
-                    if 'response' in result:
-                        self.post(result.response,
-                                  status.id,
-                                  status.user.screen_name)
-                    if 'message' in result:
-                        self.post(result.message)
-                    if 'dm' in result:
-                        self.post('d %s %s' %(status.user.screen_name,
-                                              result.dm))
+                    if (hasattr(extension, 'process_mention') and
+                        callable(getattr(extension, 'process_mention'))):
+                        result = extension.process_mention(status,
+                                                      settings=self.settings)
+                        result = utils.dotdictify(result)
+
+                        if 'response' in result:
+                            self.post(result.response,
+                                      status.id,
+                                      status.user.screen_name)
+                        if 'message' in result:
+                            self.post(result.message)
+                        if 'dm' in result:
+                            self.post('d %s %s' %(status.user.screen_name,
+                                                  result.dm))
 
 
     def post(self, message, in_reply_to=None, mention=None):
