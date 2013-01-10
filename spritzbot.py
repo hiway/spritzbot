@@ -18,21 +18,23 @@ class SpritzBot:
     extensions = {} # list of extensions loaded from directory.
     extensions_directory = os.getenv('EXTENSION_DIRECTORY',
                                      default='extensions')
-    settings = utils.dotdictify(dict(username=os.getenv('USERNAME')))
+    settings = utils.dotdictify(dict(
+                    username=os.getenv('USERNAME'),
+                    extensions=[],
+                    ))
 
-    def __init__(self, hello=False):
+    def __init__(self, extensions):
         """Loads all plugins found in ``self.extensions_directory``
         into a dictionary at ``self.extensions``."""
+        self.settings.extensions.extend(extensions)
         re_extension = re.compile('[^.].*\.py$') # match => [name].py
         for extension_file in os.listdir(self.extensions_directory):
             if re_extension.match(extension_file):
                 name = extension_file[:-3]
-                if name == 'hello' and not hello:
-                    continue # skip loading hello.py when in production
-
-                ext_info = imp.find_module(name, [self.extensions_directory])
-                extension = imp.load_module(name, *ext_info)
-                self.extensions[name] = extension
+                if name in self.settings.extensions:
+                    ext_info = imp.find_module(name, [self.extensions_directory])
+                    extension = imp.load_module(name, *ext_info)
+                    self.extensions[name] = extension
 
         # Setup oauth_hook
         OAuthHook.consumer_key = os.getenv('CONSUMER_KEY')
@@ -147,6 +149,6 @@ class SpritzBot:
 
 
 if __name__ == '__main__':
-    bot = SpritzBot(hello=True)
+    bot = SpritzBot(extensions=['hello'])
     print bot.extensions
     bot.start()
