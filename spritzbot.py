@@ -128,10 +128,14 @@ class SpritzBot:
             message = '@%s %s' %(mention, message)
 
         session = requests.session(hooks={'pre_request':self.oauth_hook})
-        session.post('http://api.twitter.com/1/statuses/update.json',
-                      {'status': message,
-                       'in_reply_to_status_id':in_reply_to,
-                       'wrap_links': True})
+        try:
+            request = session.post('http://api.twitter.com/1/statuses/update.json',
+                          {'status': message,
+                           'in_reply_to_status_id':in_reply_to,
+                           'wrap_links': True})
+            return json.loads(request.text)['id']
+        except:
+            return None
 
 
 if __name__ == '__main__':
