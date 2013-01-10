@@ -117,7 +117,7 @@ class SpritzBot:
             self.post(result.post)
 
         if 'dm' in result:
-            self.post('d %s %s' %(screen_name,
+            self.post(u'd %s %s' %(screen_name,
                                   result.dm))
 
         if 'follow' in result:
@@ -135,7 +135,7 @@ class SpritzBot:
         successful, None if failed.
         """
         if mention:
-            message = '@%s %s' %(mention, message)
+            message = u'@%s %s' %(mention, message)
 
         session = requests.session(hooks={'pre_request':self.oauth_hook})
         try:
