@@ -68,6 +68,14 @@ class SpritzBot:
                         if result:
                             self.process_response(result, status)
 
+                elif (hasattr(extension, 'process_status') and
+                    callable(getattr(extension, 'process_status'))):
+                    result = extension.process_status(status,
+                                                  settings=self.settings)
+                    if result:
+                        self.process_response(result, status)
+
+
             if 'direct_message' in status:
                 if (hasattr(extension, 'process_dm') and
                     callable(getattr(extension, 'process_dm'))):
