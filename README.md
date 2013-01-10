@@ -45,7 +45,7 @@ You can use all the above options simultaneously in one response.
 Create functions named ``process_dm``, ``process_follow`` to process
 direct messages and follow-notifications.
 
-## Running in production mode
+## Running on Heroku
 
 Deploy to Heroku, setup the prerequisites and local workstation setup
 as laid out on: https://devcenter.heroku.com/articles/python
