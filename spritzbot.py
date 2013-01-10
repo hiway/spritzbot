@@ -62,17 +62,35 @@ class SpritzBot:
                         callable(getattr(extension, 'process_mention'))):
                         result = extension.process_mention(status,
                                                       settings=self.settings)
-                        result = utils.dotdictify(result)
+                        if result:
+                            self.process_response(result, status)
 
-                        if 'response' in result:
-                            self.post(result.response,
-                                      status.id,
-                                      status.user.screen_name)
-                        if 'message' in result:
-                            self.post(result.message)
-                        if 'dm' in result:
-                            self.post('d %s %s' %(status.user.screen_name,
-                                                  result.dm))
+            if 'direct_message' in status:
+                if (hasattr(extension, 'process_dm') and
+                    callable(getattr(extension, 'process_dm'))):
+                    result = extension.process_dm(status,
+                                                  settings=self.settings)
+                    if result:
+                        self.process_response(result, status)
+
+    def process_response(self, result, status):
+        result = utils.dotdictify(result)
+        if 'direct_message' in status:
+            screen_name = status.direct_message.sender_screen_name
+        elif 'text' in status:
+            screen_name = status.user.screen_name
+        else:
+            screen_name = ''
+
+        if 'response' in result:
+            self.post(result.response,
+                      status.id,
+                      screen_name)
+        if 'message' in result:
+            self.post(result.message)
+        if 'dm' in result:
+            self.post('d %s %s' %(screen_name,
+                                  result.dm))
 
 
     def post(self, message, in_reply_to=None, mention=None):
