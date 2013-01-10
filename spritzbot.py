@@ -149,6 +149,7 @@ class SpritzBot:
 
 
 if __name__ == '__main__':
-    bot = SpritzBot(extensions=['hello'])
+    bot = SpritzBot(extensions=os.getenv('SPRITZBOT_EXTENSIONS',
+                                         default='hello').split(','))
     print bot.extensions
     bot.start()
