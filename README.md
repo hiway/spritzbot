@@ -3,6 +3,24 @@ spritzbot
 
 Twitter bot framework that uses streaming API and is simple to extend.
 
+## Setting up
+
+Create a virtual environment, install requirements.
+
+```
+$ virtualenv --distribute --no-site-packages venv
+$ source venv/bin/activate
+(venv)$ pip install -r requirements.txt
+```
+
+Edit credentials.sh and put in your details from dev.twitter.com, then
+``source credentials.sh``
+
+Finally run ``python spritzbot.py``
+
+
+## Tutorial
+
 Create a new file in 'extensions' directory, call it ``hello.py``,
 Create a function named ``process_mention`` that expects ``status`` and
 ``settings`` as arguments.
