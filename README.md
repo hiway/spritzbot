@@ -22,9 +22,11 @@ You can use ``post='Hello, world!'`` instead of
 
 ``dm='Hello, world!'`` will send a direct message.
 
-``follow=True`` will follow the user, similarly: ``unfollow=True``
-
 You can use all the above options simultaneously in one response.
 
 Create functions named ``process_dm``, ``process_follow`` to process
 direct messages and follow-notifications.
+
+## To be implemented:
+
+``follow=True`` will follow the user, similarly: ``unfollow=True``
