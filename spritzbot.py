@@ -99,18 +99,22 @@ class SpritzBot:
             self.post(result.response,
                       status.id,
                       screen_name)
+
         if 'post' in result:
             self.post(result.post)
+
         if 'dm' in result:
             self.post('d %s %s' %(screen_name,
                                   result.dm))
+
         if 'follow' in result:
             # follow user
             raise NotImplementedError
+        
         if 'unfollow' in result:
             # unfollow user
             raise NotImplementedError
-        
+
     def post(self, message, in_reply_to=None, mention=None):
         """Sends a tweet. If in_reply_to is set, the tweet is marked
         as in response to that tweet. If mention is set, @[mention] is
