@@ -45,6 +45,21 @@ You can use all the above options simultaneously in one response.
 Create functions named ``process_dm``, ``process_follow`` to process
 direct messages and follow-notifications.
 
+## Running in production mode
+
+Deploy to Heroku, setup the prerequisites and local workstation setup
+as laid out on: https://devcenter.heroku.com/articles/python
+
+Then skip over to deploy your app to heroku, finally issue
+``heroku ps:scale bot=1``. Do NOT scale to more than 1.
+
+Now confirm we're up - check logs with ``heroku logs --tail``
+
+Finally, ask a friend to send you a @mention or a dm with just 'hello'.
+
+Spritzbot does not have a web interface, so you will not see anything
+if you visit the app url.
+
 ## To be implemented:
 
 ``follow=True`` will follow the user, similarly: ``unfollow=True``
