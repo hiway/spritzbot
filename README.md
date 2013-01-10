@@ -8,7 +8,7 @@ Create a function named ``process_status`` that expects ``status`` and
 ``settings`` as arguments.
 
 ```
-def process_status(status, settings):
+def process_mention(status, settings):
     if status.user.screen_name == settings.username:
         return dict(response='Hello, world!')
     else:
