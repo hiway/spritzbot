@@ -4,7 +4,7 @@ spritzbot
 Twitter bot framework that uses streaming API and is simple to extend.
 
 Create a new file in 'extensions' directory, call it ``hello.py``,
-Create a function named ``process_status`` that expects ``status`` and
+Create a function named ``process_mention`` that expects ``status`` and
 ``settings`` as arguments.
 
 ```
