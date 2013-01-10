@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import random
 
 def process_mention(status, settings):
     print status.user.screen_name,':', status.text
@@ -13,6 +14,9 @@ def process_mention(status, settings):
         'kkkk':'ENOUGH!',
         u'के':u'केके',
         u'केके':u'काय हे?',
+        'rock':random.choice(['rock','paper','scissors']),
+        'paper':random.choice(['rock','paper','scissors']),
+        'scissors':random.choice(['rock','paper','scissors']),
     }
 
     if text in responses:
