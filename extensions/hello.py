@@ -3,3 +3,6 @@ def process_mention(status, settings):
         return dict(response='Hello, world!')
     else:
         return None
+
+def process_follow(status, settings):
+    return dict(dm='Hello, world!')

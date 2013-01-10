@@ -73,12 +73,25 @@ class SpritzBot:
                     if result:
                         self.process_response(result, status)
 
+            if ('event' in status and 'follow' in status.event and
+                self.settings.username == status.target.screen_name):
+                if (hasattr(extension, 'process_follow') and
+                    callable(getattr(extension, 'process_follow'))):
+                    result = extension.process_follow(status,
+                                                  settings=self.settings)
+                    if result:
+                        self.process_response(result, status)
+
+
     def process_response(self, result, status):
         result = utils.dotdictify(result)
+        # Wrap twitter's various methods to return screen_name
         if 'direct_message' in status:
             screen_name = status.direct_message.sender_screen_name
         elif 'text' in status:
             screen_name = status.user.screen_name
+        elif 'event' in status:
+            screen_name = status.source.screen_name
         else:
             screen_name = ''
 
@@ -86,12 +99,11 @@ class SpritzBot:
             self.post(result.response,
                       status.id,
                       screen_name)
-        if 'message' in result:
-            self.post(result.message)
+        if 'post' in result:
+            self.post(result.post)
         if 'dm' in result:
             self.post('d %s %s' %(screen_name,
                                   result.dm))
-
 
     def post(self, message, in_reply_to=None, mention=None):
         """Sends a tweet. If in_reply_to is set, the tweet is marked

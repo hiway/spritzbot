@@ -17,7 +17,7 @@ def process_mention(status, settings):
 
 This will automatically respond to the user who mentioned you.
 
-You can use ``message='Hello, world!'`` instead of
+You can use ``post='Hello, world!'`` instead of
 ``response='Hello, world!'`` to send a tweet out to your timeline.
 
 ``dm='Hello, world!'`` will send a direct message.
