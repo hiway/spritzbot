@@ -29,21 +29,28 @@ class SpritzBot:
                 extension = imp.load_module(name, *ext_info)
                 self.extensions[name] = extension
 
-    def start(self):
-        """Connects to Twitter's streaming API"""
+        # Setup oauth_hook
         OAuthHook.consumer_key = os.getenv('CONSUMER_KEY')
         OAuthHook.consumer_secret = os.getenv('CONSUMER_SECRET')
-        oauth_hook = OAuthHook(os.getenv('ACCESS_TOKEN'),
+        self.oauth_hook = OAuthHook(os.getenv('ACCESS_TOKEN'),
                                os.getenv('ACCESS_TOKEN_SECRET'))
 
-        session = requests.session(hooks={'pre_request':oauth_hook})
+
+    def start(self):
+        """Connects to Twitter's streaming API"""
+        session = requests.session(hooks={'pre_request':self.oauth_hook})
         client = session.post('https://userstream.twitter.com/1.1/user.json',
                               prefetch=False, verify=False)
 
         for line in client.iter_lines(chunk_size=1, decode_unicode=True):
             if line:
                 data = json.loads(line)
-                print data
+                self.process(data)
+
+    def process(self, data):
+        """Processes every status/event coming in through streaming API
+        """
+        print data
 
 if __name__ == '__main__':
     bot = SpritzBot()
