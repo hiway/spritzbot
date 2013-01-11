@@ -4,7 +4,7 @@ def process_mention(status, settings):
         return dict(response='Hello, world!')
 
     if text == 'unfollow':
-        return dict(unfollow=True)
+        return dict(unfollow=True, response=u'If you insist… unfollowing.')
 
 
 def process_follow(status, settings):
