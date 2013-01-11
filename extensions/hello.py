@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 def process_mention(status, settings):
     print status.user.screen_name,':', status.text
     if status.text.lower() == ('@%s hello' % settings.username):
