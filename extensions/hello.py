@@ -5,7 +5,7 @@ def process_mention(status, settings):
     if status.text.lower() == ('@%s hello' % settings.username):
         return dict(response='Hello, world!')
 
-    if text == 'unfollow':
+    if status.text.lower() == ('@%s unfollow' % settings.username):
         return dict(unfollow=True, response=u'If you insist… unfollowing.')
 
 
