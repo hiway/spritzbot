@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 def process_mention(status, settings):
-    print status.user.screen_name,':', status.text
+    print status.user.screen_name,':', status.text.decode('utf-8')
     if status.text.lower() == ('@%s hello' % settings.username):
         return dict(response='Hello, world!')
 
@@ -15,11 +15,11 @@ def process_follow(status, settings):
 
 
 def process_dm(status, settings):
-    print status.direct_message.sender_screen_name,':', status.direct_message.text
+    print status.direct_message.sender_screen_name,':', status.direct_message.text.decode('utf-8')
     if status.direct_message.text.lower() == 'hello':
         return dict(dm='Hello, world!')
     else:
         return None
 
 def process_status(status, settings):
-    print status.user.screen_name,':', status.text
+    print status.user.screen_name,':', status.text.decode('utf-8')
