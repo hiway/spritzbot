@@ -40,6 +40,8 @@ You can use ``post='Hello, world!'`` instead of
 
 ``dm='Hello, world!'`` will send a direct message.
 
+``follow=True`` will follow the user, similarly: ``unfollow=True``
+
 You can use all the above options simultaneously in one response.
 
 Create functions named ``process_dm``, ``process_follow`` to process
@@ -59,7 +61,3 @@ Finally, ask a friend to send you a @mention or a dm with just 'hello'.
 
 Spritzbot does not have a web interface, so you will not see anything
 if you visit the app url.
-
-## To be implemented:
-
-``follow=True`` will follow the user, similarly: ``unfollow=True``

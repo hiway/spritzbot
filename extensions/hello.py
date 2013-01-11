@@ -2,13 +2,14 @@ def process_mention(status, settings):
     print status.user.screen_name,':', status.text
     if status.text.lower() == ('@%s hello' % settings.username):
         return dict(response='Hello, world!')
-    else:
-        return None
+
+    if text == 'unfollow':
+        return dict(unfollow=True)
 
 
 def process_follow(status, settings):
     print status.source.screen_name, 'followed.'
-    return dict(dm='Hello, world!')
+    return dict(follow=True, dm='Followed you back!')
 
 
 def process_dm(status, settings):

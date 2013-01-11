@@ -122,11 +122,11 @@ class SpritzBot:
 
         if 'follow' in result:
             # follow user
-            raise NotImplementedError
+            self.follow(screen_name, follow=True)
 
         if 'unfollow' in result:
             # unfollow user
-            raise NotImplementedError
+            self.follow(screen_name, follow=False)
 
     def post(self, message, in_reply_to=None, mention=None):
         """Sends a tweet. If in_reply_to is set, the tweet is marked
@@ -147,6 +147,14 @@ class SpritzBot:
         except:
             return None
 
+    def follow(self, screen_name, follow=True):
+        if follow:
+            url = 'https://api.twitter.com/1.1/friendships/create.json'
+        else:
+            url = 'https://api.twitter.com/1.1/friendships/destroy.json'
+
+        session = requests.session(hooks={'pre_request':self.oauth_hook})
+        request = session.post(url,{'screen_name': screen_name})
 
 if __name__ == '__main__':
     bot = SpritzBot(extensions=os.getenv('SPRITZBOT_EXTENSIONS',
