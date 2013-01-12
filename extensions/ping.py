@@ -2,7 +2,7 @@
 import random
 
 def process_mention(status, settings):
-    print status.user.screen_name,':', status.text
+    print status.user.screen_name,':', status.text.encode('utf-8')
     text = status.text.lower().replace('@'+settings.username, '').strip()
 
     responses = {
