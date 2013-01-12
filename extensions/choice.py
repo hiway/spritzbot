@@ -2,7 +2,7 @@
 import random
 
 def process_mention(status, settings):
-    text = status.text.lower().replace('@'+settings.username, '').strip()
+    text = u'%' % status.text.lower().replace('@'+settings.username, '').strip()
     tokens = text.split(' ')
     if tokens[0] == 'choose':
         choices = [x.strip() for x in ' '.join(tokens[1:]).split(',')]
