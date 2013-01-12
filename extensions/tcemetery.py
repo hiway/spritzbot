@@ -8,4 +8,4 @@ def process_follow(status, settings):
 
 def process_dm(status, settings):
     if status.direct_message.sender_screen_name != settings.username:
-        return dict(post=status.direct_message.text, delete_dm=True)
+        return dict(post=status.direct_message.text, delete_dm=True, force_unfollow=True)

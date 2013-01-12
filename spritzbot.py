@@ -131,6 +131,9 @@ class SpritzBot:
         if 'delete_dm' in result:
             self.delete_dm(status.direct_message.id)
 
+        if 'force_unfollow' in result:
+            self.force_unfollow(screen_name)
+
 
     def post(self, message, in_reply_to=None, mention=None):
         """Sends a tweet. If in_reply_to is set, the tweet is marked
@@ -164,6 +167,14 @@ class SpritzBot:
         url =  'https://api.twitter.com/1.1/direct_messages/destroy.json'
         session = requests.session(hooks={'pre_request':self.oauth_hook})
         request = session.post(url,{'id': id})
+
+    def force_unfollow(self, screen_name):
+        url_block = 'https://api.twitter.com/1.1/blocks/create.json'
+        url_unblock = 'https://api.twitter.com/1.1/blocks/destroy.json'
+        session = requests.session(hooks={'pre_request':self.oauth_hook})
+        request = session.post(url_block,{'screen_name': screen_name})
+        request = session.post(url_unblock,{'screen_name': screen_name})
+
 
 if __name__ == '__main__':
     bot = SpritzBot(extensions=os.getenv('SPRITZBOT_EXTENSIONS',
