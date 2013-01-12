@@ -11,4 +11,11 @@ def process_dm(status, settings):
         if status.direct_message.text.lower().strip() == 'bye':
             return dict(dm='Cya!', delete_dm=True, force_unfollow=True)
 
-        return dict(post=status.direct_message.text, delete_dm=True)
+        # scrape mentions
+        text = status.direct_message.text.replace('@','')
+
+        # scrape DMs
+        if text[:2] == 'd ' or text[:2] == 'm ':
+            text = text[2:]
+
+        return dict(post=text, delete_dm=True)
