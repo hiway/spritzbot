@@ -128,6 +128,10 @@ class SpritzBot:
             # unfollow user
             self.follow(screen_name, follow=False)
 
+        if 'delete_dm' in result:
+            self.delete_dm(status.direct_message.id)
+
+
     def post(self, message, in_reply_to=None, mention=None):
         """Sends a tweet. If in_reply_to is set, the tweet is marked
         as in response to that tweet. If mention is set, @[mention] is
@@ -155,6 +159,11 @@ class SpritzBot:
 
         session = requests.session(hooks={'pre_request':self.oauth_hook})
         request = session.post(url,{'screen_name': screen_name})
+
+    def delete_dm(self, id):
+        url =  'https://api.twitter.com/1.1/direct_messages/destroy.json'
+        session = requests.session(hooks={'pre_request':self.oauth_hook})
+        request = session.post(url,{'id': id})
 
 if __name__ == '__main__':
     bot = SpritzBot(extensions=os.getenv('SPRITZBOT_EXTENSIONS',
