@@ -46,7 +46,7 @@ class SpritzBot:
         """Connects to Twitter's streaming API"""
         session = requests.session(hooks={'pre_request':self.oauth_hook})
         client = session.post('https://userstream.twitter.com/1.1/user.json',
-                              prefetch=False, verify=False)
+                              prefetch=False, verify=True)
 
         for line in client.iter_lines(chunk_size=1, decode_unicode=True):
             if line:
@@ -146,7 +146,7 @@ class SpritzBot:
 
         session = requests.session(hooks={'pre_request':self.oauth_hook})
         try:
-            request = session.post('http://api.twitter.com/1/statuses/update.json',
+            request = session.post('http://api.twitter.com/1.1/statuses/update.json',
                           {'status': message,
                            'in_reply_to_status_id':in_reply_to,
                            'wrap_links': True})

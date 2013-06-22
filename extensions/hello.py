@@ -17,7 +17,7 @@ def process_follow(status, settings):
 def process_dm(status, settings):
     print status.direct_message.sender_screen_name,':', status.direct_message.text.encode('utf-8')
     if status.direct_message.text.lower() == 'hello':
-        return dict(dm='Hello, %s!' % status.user.screen_name)
+        return dict(dm='Hello, %s!' % status.direct_message.sender_screen_name)
     else:
         return None
 
