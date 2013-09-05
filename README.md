@@ -52,6 +52,8 @@ direct messages and follow-notifications.
 Deploy to Heroku, setup the prerequisites and local workstation setup
 as laid out on: https://devcenter.heroku.com/articles/python
 
+Run a `heroku config:set ` command with all the environment variables in `credentials.sh` 
+
 Then skip over to deploy your app to heroku, finally issue
 ``heroku ps:scale bot=1``. Do NOT scale to more than 1.
 
